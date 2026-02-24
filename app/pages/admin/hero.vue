@@ -118,7 +118,7 @@ const onProjectSelect = (slide: HeroSlide, projectId: string) => {
   slide.project_id = projectId
   const project = projects.value.find((p: Pick<Project, 'id' | 'slug'>) => p.id === projectId)
   if (project) {
-    slide.cta_link = `/projects/${project.slug}`
+    slide.cta_link = `/project/${project.slug}`
   }
 }
 
