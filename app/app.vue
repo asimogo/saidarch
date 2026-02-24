@@ -27,6 +27,11 @@ useHead({
   ],
   script: [
     {
+      key: 'theme-init',
+      innerHTML: `(function(){var m=document.cookie.match(/said_theme=(light|dark)/);var t=m?m[1]:null;if(!t&&window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches)t="dark";if(t==="dark")document.documentElement.classList.add("dark")})()`,
+      tagPosition: 'head',
+    },
+    {
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
         '@context': 'https://schema.org',

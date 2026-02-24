@@ -1,52 +1,48 @@
 export const useTheme = () => {
-  const theme = useState<'light' | 'dark'>('theme', () => 'light')
-  const manualOverride = useState<boolean>('themeManual', () => false)
+  const themeCookie = useCookie<'light' | 'dark'>('said_theme', {
+    maxAge: 60 * 60 * 24 * 365,
+  })
+
+  const theme = useState<'light' | 'dark'>('theme', () => themeCookie.value || 'light')
 
   const initTheme = async () => {
-    // 1. Check localStorage manual preference
+    // Cookie already set from previous visit — SSR is already correct
+    if (themeCookie.value) {
+      applyTheme(theme.value)
+      return
+    }
+
+    // First visit: detect preference on client
     if (import.meta.client) {
-      const saved = localStorage.getItem('said_theme')
-      if (saved === 'light' || saved === 'dark') {
-        theme.value = saved
-        manualOverride.value = true
-        applyTheme(saved)
+      if (window.matchMedia?.('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark')
         return
       }
     }
-    // 2. Check system preference
-    if (import.meta.client && window.matchMedia) {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)')
-      if (prefersDark.matches) {
-        theme.value = 'dark'
-        applyTheme('dark')
-        return
-      }
-      if (prefersDark.media !== 'not all') {
-        theme.value = 'light'
-        applyTheme('light')
-        return
-      }
+
+    // Timezone-based auto detection fallback
+    try {
+      const { get } = await useSiteSettings()
+      const tz = get('timezone') || 'Asia/Phnom_Penh'
+      const dayStart = Number(get('day_start_hour')) || 6
+      const dayEnd = Number(get('day_end_hour')) || 18
+      const now = new Date()
+      const hour = Number(now.toLocaleString('en-US', { timeZone: tz, hour: 'numeric', hour12: false }))
+      const isDaytime = hour >= dayStart && hour < dayEnd
+      setTheme(isDaytime ? 'light' : 'dark')
+    } catch {
+      applyTheme(theme.value)
     }
-    // 3. Timezone-based auto detection
-    const { get } = await useSiteSettings()
-    const tz = get('timezone') || 'Asia/Phnom_Penh'
-    const dayStart = Number(get('day_start_hour')) || 6
-    const dayEnd = Number(get('day_end_hour')) || 18
-    const now = new Date()
-    const hour = Number(now.toLocaleString('en-US', { timeZone: tz, hour: 'numeric', hour12: false }))
-    const isDaytime = hour >= dayStart && hour < dayEnd
-    theme.value = isDaytime ? 'light' : 'dark'
-    applyTheme(theme.value)
+  }
+
+  const setTheme = (t: 'light' | 'dark') => {
+    theme.value = t
+    themeCookie.value = t
+    applyTheme(t)
   }
 
   const toggleTheme = () => {
-    const newTheme = theme.value === 'light' ? 'dark' : 'light'
-    theme.value = newTheme
-    manualOverride.value = true
-    if (import.meta.client) {
-      localStorage.setItem('said_theme', newTheme)
-    }
-    applyTheme(newTheme)
+    setTheme(theme.value === 'light' ? 'dark' : 'light')
   }
 
   const applyTheme = (t: 'light' | 'dark') => {
