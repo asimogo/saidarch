@@ -1,10 +1,10 @@
 <template>
-  <section id="about" class="py-section">
+  <section id="about" class="py-24 md:py-32">
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-center">
         <!-- Left: Avatar -->
         <div class="relative flex justify-center">
-          <div class="relative w-64 h-80 md:w-72 md:h-96 overflow-hidden">
+          <div class="relative w-64 h-80 md:w-80 md:h-112 lg:w-96 lg:h-128 overflow-hidden">
             <NuxtImg
               v-if="avatarUrl"
               :src="avatarUrl"
@@ -35,14 +35,15 @@
             </p>
           </div>
 
-          <div v-if="services" class="pt-4">
-            <h3 class="text-small uppercase tracking-wider text-bronze mb-2">Services</h3>
-            <p class="text-body text-subtle-light dark:text-subtle-dark">{{ services }}</p>
-          </div>
-
-          <div v-if="areas" class="pt-2">
-            <h3 class="text-small uppercase tracking-wider text-bronze mb-2">Areas</h3>
-            <p class="text-body text-subtle-light dark:text-subtle-dark">{{ areas }}</p>
+          <div v-if="services || areas" class="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-border-light dark:border-border-dark">
+            <div v-if="services">
+              <h3 class="text-small uppercase tracking-wider text-bronze mb-2">Services</h3>
+              <p class="text-body text-subtle-light dark:text-subtle-dark">{{ services }}</p>
+            </div>
+            <div v-if="areas">
+              <h3 class="text-small uppercase tracking-wider text-bronze mb-2">Areas</h3>
+              <p class="text-body text-subtle-light dark:text-subtle-dark">{{ areas }}</p>
+            </div>
           </div>
         </div>
       </div>
