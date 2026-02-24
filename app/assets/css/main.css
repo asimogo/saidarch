@@ -89,6 +89,13 @@
     line-height: 1.85;
     letter-spacing: 0.01em;
   }
+  .prose-intro h1, .prose-intro h2, .prose-intro h3 {
+    @apply font-heading text-deep-rock dark:text-sandstone mb-4 mt-8 first:mt-0;
+    line-height: 1.3;
+  }
+  .prose-intro h1 { font-size: var(--text-h2); }
+  .prose-intro h2 { font-size: var(--text-h3); }
+  .prose-intro h3 { @apply text-lg font-semibold; }
   .prose-intro p {
     @apply mb-5 last:mb-0;
   }
