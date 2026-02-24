@@ -1,5 +1,5 @@
 <template>
-  <section id="hero" ref="heroRef" class="relative h-screen -mt-16 overflow-hidden">
+  <section id="hero" ref="heroRef" class="relative h-[100svh] md:h-screen -mt-16 overflow-hidden">
     <BaseCarousel
       :total="slides?.length || 0"
       :autoplay="true"
@@ -12,18 +12,20 @@
         <div
           v-for="(slide, i) in slides"
           :key="slide.id"
-          class="absolute inset-0 transition-opacity duration-1000"
+          class="absolute inset-0 overflow-hidden transition-opacity duration-1000"
           :class="i === currentIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'"
         >
           <NuxtImg
             :src="slide.image_url"
             :alt="l(slide, 'title') || 'SAID Architecture'"
-            class="hero-slide-img w-full h-full object-cover"
+            class="hero-slide-img absolute inset-0 w-full h-full object-cover object-center"
             :preload="i === 0"
             :loading="i === 0 ? 'eager' : 'lazy'"
             format="webp"
             :quality="85"
             sizes="100vw"
+            width="1920"
+            height="1080"
           />
           <!-- Dark overlay -->
           <div class="absolute inset-0 bg-black/40" />
@@ -40,7 +42,7 @@
         {{ l(currentSlide, 'subtitle') }}
       </p>
       <div class="flex gap-4">
-        <BaseButton variant="primary" size="md" :to="currentSlide?.cta_link || '#projects'">
+        <BaseButton variant="primary" size="md" :to="currentSlide?.cta_link || localePath('/projects')">
           {{ l(currentSlide, 'cta_text') || $t('hero.viewProjects') }}
         </BaseButton>
         <BaseButton variant="outline" size="md" to="#contact" class="border-white text-white hover:bg-white hover:text-deep-rock">
@@ -66,6 +68,7 @@ const props = defineProps<{
 }>()
 
 const { l } = useLocalizedField()
+const localePath = useLocalePath()
 const { kenBurns } = useAnimation()
 
 const heroRef = ref<HTMLElement | null>(null)

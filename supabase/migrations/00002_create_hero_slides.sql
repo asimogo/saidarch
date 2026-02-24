@@ -7,7 +7,7 @@ CREATE TABLE hero_slides (
   subtitle_en   TEXT,
   cta_text_zh   TEXT DEFAULT '查看作品',
   cta_text_en   TEXT DEFAULT 'View Projects',
-  cta_link      TEXT DEFAULT '#projects',
+  cta_link      TEXT DEFAULT '/projects',
   sort_order    INT NOT NULL DEFAULT 0,
   is_active     BOOLEAN NOT NULL DEFAULT true,
   created_at    TIMESTAMPTZ NOT NULL DEFAULT now(),

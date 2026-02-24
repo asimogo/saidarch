@@ -1,5 +1,5 @@
 <template>
-  <section id="projects" class="py-section">
+  <section v-if="projects?.length" id="projects" class="py-section">
     <div class="max-w-7xl mx-auto px-6">
       <!-- Section header -->
       <div class="text-center mb-12">
