@@ -31,7 +31,23 @@
   },
   "contact": {
     "title": "Get in Touch",
-    "mapTitle": "Our Office Location"
+    "subtitle": "Share your project needs and timeline. We will respond within one business day.",
+    "cardEyebrow": "Get in Touch",
+    "cardTitle": "Start the Conversation",
+    "cardDescription": "Reach us by email or instant messaging and we will arrange the next step quickly.",
+    "mapTitle": "Our Office Location",
+    "mapCaption": "Visits are by appointment so we can prepare a focused consultation.",
+    "mapPlaceholder": "Map details coming soon",
+    "labels": {
+      "email": "Email",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "office": "Office"
+    },
+    "actions": {
+      "openTelegram": "Contact via Telegram",
+      "openWhatsApp": "Contact via WhatsApp"
+    }
   },
   "footer": {
     "copyright": "© SAID {year}. All rights reserved.",

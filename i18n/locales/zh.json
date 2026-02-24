@@ -31,7 +31,23 @@
   },
   "contact": {
     "title": "联系我们",
-    "mapTitle": "办公室位置"
+    "subtitle": "告诉我们您的项目需求与时间安排，我们将在 1 个工作日内回复。",
+    "cardEyebrow": "Get in Touch",
+    "cardTitle": "开启项目对话",
+    "cardDescription": "您可以通过邮件或即时通讯联系我们，我们会尽快安排沟通。",
+    "mapTitle": "办公室位置",
+    "mapCaption": "来访请提前预约，我们将为您安排合适的接待时间。",
+    "mapPlaceholder": "地图信息即将上线",
+    "labels": {
+      "email": "邮箱",
+      "telegram": "Telegram",
+      "whatsapp": "WhatsApp",
+      "office": "办公地址"
+    },
+    "actions": {
+      "openTelegram": "通过 Telegram 联系",
+      "openWhatsApp": "通过 WhatsApp 联系"
+    }
   },
   "footer": {
     "copyright": "© SAID {year}. 保留所有权利。",

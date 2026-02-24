@@ -82,6 +82,30 @@
   .khmer-divider {
     @apply w-full h-px bg-border-light dark:bg-border-dark;
   }
+
+  /* Markdown prose styles for intro text */
+  .prose-intro {
+    font-size: var(--text-body);
+    line-height: 1.85;
+    letter-spacing: 0.01em;
+  }
+  .prose-intro p {
+    @apply mb-5 last:mb-0;
+  }
+  .prose-intro strong {
+    @apply font-semibold text-deep-rock dark:text-sandstone;
+  }
+  .prose-intro em {
+    @apply italic;
+  }
+  .prose-intro a {
+    @apply text-bronze hover:text-bronze-hover underline underline-offset-2 transition-colors;
+  }
+  .prose-intro ul, .prose-intro ol {
+    @apply ml-5 mb-5 space-y-2;
+  }
+  .prose-intro ul { @apply list-disc; }
+  .prose-intro ol { @apply list-decimal; }
 }
 
 /* === Page Transition Animation === */

@@ -47,22 +47,65 @@
           <template v-else>
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <span class="text-xs text-gray-400 mb-1 block">中文</span>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs text-gray-400">中文</span>
+                  <button
+                    v-if="isLargeTextField(setting.key)"
+                    class="text-xs text-bronze hover:text-bronze-hover transition-colors"
+                    @click="togglePreview(setting.key + '_zh')"
+                  >
+                    {{ previewKey === setting.key + '_zh' ? '编辑' : '预览' }}
+                  </button>
+                </div>
+                <div
+                  v-if="previewKey === setting.key + '_zh'"
+                  class="prose-intro w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded bg-gray-50 dark:bg-gray-900 min-h-30"
+                  v-html="renderMarkdown(formData[setting.key + '_zh'] || '')"
+                />
                 <textarea
+                  v-else
                   v-model="formData[setting.key + '_zh']"
-                  rows="2"
-                  class="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded bg-transparent resize-none"
+                  :rows="isLargeTextField(setting.key) ? 5 : 2"
+                  class="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded bg-transparent"
+                  :class="isLargeTextField(setting.key) ? 'resize-y' : 'resize-none'"
                 />
               </div>
               <div>
-                <span class="text-xs text-gray-400 mb-1 block">English</span>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs text-gray-400">English</span>
+                  <div v-if="isLargeTextField(setting.key)" class="flex items-center gap-3">
+                    <button
+                      class="text-xs text-bronze hover:text-bronze-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      :disabled="translating || !formData[setting.key + '_zh']"
+                      @click="translateField(setting.key)"
+                    >
+                      {{ translating ? 'AI 翻译中...' : 'AI 翻译 →' }}
+                    </button>
+                    <button
+                      class="text-xs text-bronze hover:text-bronze-hover transition-colors"
+                      @click="togglePreview(setting.key + '_en')"
+                    >
+                      {{ previewKey === setting.key + '_en' ? 'Edit' : 'Preview' }}
+                    </button>
+                  </div>
+                </div>
+                <div
+                  v-if="previewKey === setting.key + '_en'"
+                  class="prose-intro w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded bg-gray-50 dark:bg-gray-900 min-h-30"
+                  v-html="renderMarkdown(formData[setting.key + '_en'] || '')"
+                />
                 <textarea
+                  v-else
                   v-model="formData[setting.key + '_en']"
-                  rows="2"
-                  class="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded bg-transparent resize-none"
+                  :rows="isLargeTextField(setting.key) ? 5 : 2"
+                  class="w-full px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded bg-transparent"
+                  :class="isLargeTextField(setting.key) ? 'resize-y' : 'resize-none'"
                 />
               </div>
             </div>
+            <p v-if="isLargeTextField(setting.key)" class="text-xs text-gray-400 mt-2">
+              Markdown: **粗体** / *斜体* / [链接](url) / - 列表项
+            </p>
           </template>
         </div>
 
@@ -115,6 +158,38 @@ watch(allSettings, (settings) => {
 
 const isNumberField = (key: string) => {
   return key.includes('_hour') || key === 'day_start_hour' || key === 'day_end_hour'
+}
+
+const LARGE_TEXT_KEYS = new Set(['intro'])
+const isLargeTextField = (key: string) => LARGE_TEXT_KEYS.has(key)
+
+const previewKey = ref<string | null>(null)
+const togglePreview = (key: string) => {
+  previewKey.value = previewKey.value === key ? null : key
+}
+
+const translating = ref(false)
+const translateField = async (key: string) => {
+  const content = formData[key + '_zh']
+  if (!content || translating.value) return
+  translating.value = true
+  try {
+    const { data: { session } } = await supabase.auth.getSession()
+    if (!session?.access_token) return
+    const { translations } = await $fetch<{ translations: Record<string, string> }>('/api/translate', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${session.access_token}` },
+      body: {
+        texts: [{ field: key, content }],
+        sectionType: activeTab.value,
+      },
+    })
+    if (translations[key]) formData[key + '_en'] = translations[key]
+  } catch (e) {
+    console.error('Translation failed:', e)
+  } finally {
+    translating.value = false
+  }
 }
 
 const getImageFolder = (key: string) => {
