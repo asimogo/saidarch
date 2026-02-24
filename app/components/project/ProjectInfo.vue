@@ -5,10 +5,6 @@
         <p class="text-xs uppercase tracking-wider text-bronze mb-1">{{ $t('project.category') }}</p>
         <p class="text-body">{{ l(project.category, 'name') }}</p>
       </div>
-      <div v-if="project.project_status === 'completed'">
-        <p class="text-xs uppercase tracking-wider text-bronze mb-1">{{ $t('project.status') }}</p>
-        <p class="text-body">{{ $t('status.completed') }}</p>
-      </div>
       <div v-if="project.location">
         <p class="text-xs uppercase tracking-wider text-bronze mb-1">{{ $t('project.location') }}</p>
         <p class="text-body">{{ project.location }}</p>

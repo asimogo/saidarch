@@ -8,9 +8,6 @@ export const NAV_ITEMS = [
   { key: 'contact', href: '#contact' },
 ] as const
 
-// Project status options
-export const PROJECT_STATUSES = ['designing', 'constructing', 'completed', 'awarded'] as const
-
 // Publish status options
 export const PUBLISH_STATUSES = ['draft', 'published'] as const
 

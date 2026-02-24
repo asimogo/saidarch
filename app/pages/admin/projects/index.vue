@@ -19,7 +19,6 @@
             <tr>
               <th class="text-left px-4 py-3 text-xs uppercase tracking-wider text-gray-500">Project</th>
               <th class="text-left px-4 py-3 text-xs uppercase tracking-wider text-gray-500">Category</th>
-              <th class="text-left px-4 py-3 text-xs uppercase tracking-wider text-gray-500">Status</th>
               <th class="text-left px-4 py-3 text-xs uppercase tracking-wider text-gray-500">Updated</th>
             </tr>
           </thead>
@@ -37,11 +36,6 @@
                 <span class="font-medium truncate max-w-[200px]">{{ p.title_zh }}</span>
               </td>
               <td class="px-4 py-3 text-gray-500">{{ p.category?.name_en || '-' }}</td>
-              <td class="px-4 py-3">
-                <span class="text-xs px-2 py-0.5 rounded" :class="statusColor(p.project_status)">
-                  {{ p.project_status }}
-                </span>
-              </td>
               <td class="px-4 py-3 text-gray-400 text-xs">{{ formatDate(p.updated_at) }}</td>
             </tr>
           </tbody>
@@ -69,10 +63,4 @@ const { data: projects } = await useAsyncData('admin-project-list', () =>
     .then(({ data }) => data),
 )
 
-const statusColor = (s: string | null) => ({
-  'bg-blue-50 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400': s === 'designing',
-  'bg-amber-50 text-amber-600 dark:bg-amber-900/20 dark:text-amber-400': s === 'constructing',
-  'bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400': s === 'completed',
-  'bg-purple-50 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400': s === 'awarded',
-})
 </script>

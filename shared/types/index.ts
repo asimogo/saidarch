@@ -11,7 +11,6 @@ export type PageContent = Database['public']['Tables']['page_contents']['Row']
 export type SlugRedirect = Database['public']['Tables']['slug_redirects']['Row']
 
 // Enum type aliases
-export type ProjectStatus = Database['public']['Enums']['project_status_enum']
 export type PublishStatus = Database['public']['Enums']['publish_status_enum']
 export type SectionType = Database['public']['Enums']['section_type_enum']
 

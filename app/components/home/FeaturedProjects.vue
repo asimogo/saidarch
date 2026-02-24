@@ -37,7 +37,6 @@
                   />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div class="absolute bottom-8 left-8 right-8 text-white">
-                    <StatusBadge v-if="project.project_status && project.project_status !== 'completed'" :status="project.project_status" class="mb-3" />
                     <h3 class="font-heading text-2xl md:text-4xl tracking-wider mb-2">
                       {{ l(project, 'title') }}
                     </h3>

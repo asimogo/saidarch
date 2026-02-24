@@ -20,12 +20,9 @@
       <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
     </div>
     <div class="pt-4 space-y-1">
-      <div class="flex items-center gap-2">
-        <StatusBadge v-if="project.project_status && project.project_status !== 'completed'" :status="project.project_status" />
-        <span v-if="project.category" class="text-xs text-subtle-light dark:text-subtle-dark uppercase tracking-wider">
-          {{ l(project.category, 'name') }}
-        </span>
-      </div>
+      <span v-if="project.category" class="text-xs text-subtle-light dark:text-subtle-dark uppercase tracking-wider">
+        {{ l(project.category, 'name') }}
+      </span>
       <h3 class="font-heading text-xl group-hover:text-bronze transition-colors">
         {{ l(project, 'title') }}
       </h3>

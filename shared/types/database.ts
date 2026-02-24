@@ -137,7 +137,6 @@ export type Database = {
           location: string | null
           area: string | null
           year: number | null
-          project_status: Database['public']['Enums']['project_status_enum'] | null
           description_zh: string | null
           description_en: string | null
           seo_title_zh: string | null
@@ -163,7 +162,6 @@ export type Database = {
           location?: string | null
           area?: string | null
           year?: number | null
-          project_status?: Database['public']['Enums']['project_status_enum'] | null
           description_zh?: string | null
           description_en?: string | null
           seo_title_zh?: string | null
@@ -189,7 +187,6 @@ export type Database = {
           location?: string | null
           area?: string | null
           year?: number | null
-          project_status?: Database['public']['Enums']['project_status_enum'] | null
           description_zh?: string | null
           description_en?: string | null
           seo_title_zh?: string | null
@@ -306,7 +303,6 @@ export type Database = {
       }
     }
     Enums: {
-      project_status_enum: 'designing' | 'constructing' | 'completed' | 'awarded'
       publish_status_enum: 'draft' | 'published' | 'archived'
       section_type_enum: 'project' | 'brand' | 'about' | 'contact' | 'hero' | 'general'
     }

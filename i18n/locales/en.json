@@ -21,7 +21,6 @@
     "area": "Area",
     "year": "Year",
     "category": "Category",
-    "status": "Status",
     "description": "Design Concept",
     "gallery": "Gallery",
     "related": "Related Projects",
@@ -29,12 +28,6 @@
     "next": "Next Project",
     "backToHome": "Back to Home",
     "viewAll": "View All Projects"
-  },
-  "status": {
-    "designing": "In Design",
-    "constructing": "Under Construction",
-    "completed": "Completed",
-    "awarded": "Award Winning"
   },
   "contact": {
     "title": "Get in Touch",

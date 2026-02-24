@@ -73,18 +73,10 @@
             </div>
           </div>
 
-          <div class="flex gap-4 items-center">
-            <div>
-              <label class="text-xs text-gray-500 uppercase tracking-wider mb-1 block">Project Status</label>
-              <select v-model="form.project_status" class="px-3 py-2 text-sm border border-gray-200 dark:border-gray-600 rounded bg-transparent">
-                <option v-for="s in PROJECT_STATUSES" :key="s" :value="s">{{ s }}</option>
-              </select>
-            </div>
-            <label class="flex items-center gap-2 mt-4">
-              <input v-model="form.is_featured" type="checkbox" class="accent-bronze" />
-              <span class="text-sm">Featured on homepage</span>
-            </label>
-          </div>
+          <label class="flex items-center gap-2">
+            <input v-model="form.is_featured" type="checkbox" class="accent-bronze" />
+            <span class="text-sm">Featured on homepage</span>
+          </label>
         </section>
 
         <!-- Cover image -->
@@ -204,7 +196,6 @@
 
 <script setup lang="ts">
 import { slugify } from '~/utils/helpers'
-import { PROJECT_STATUSES } from '~/utils/constants'
 import type { PublishStatus } from '~/shared/types'
 
 definePageMeta({ layout: 'admin', middleware: 'auth' })
@@ -224,7 +215,6 @@ const form = reactive({
   location: '',
   area: '',
   year: null as number | null,
-  project_status: 'designing' as string,
   description_zh: '',
   description_en: '',
   seo_title_zh: '',

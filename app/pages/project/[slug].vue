@@ -14,8 +14,7 @@
       />
       <div class="absolute inset-0 bg-black/40 flex items-end p-8 lg:p-16">
         <div>
-          <StatusBadge v-if="project.project_status && project.project_status !== 'completed'" :status="project.project_status" class="mb-3" />
-          <h1 class="font-heading text-4xl md:text-6xl lg:text-h1 text-white mt-4">
+          <h1 class="font-heading text-4xl md:text-6xl lg:text-h1 text-white">
             {{ l(project, 'title') }}
           </h1>
         </div>
