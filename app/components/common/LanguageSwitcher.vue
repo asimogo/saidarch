@@ -3,7 +3,7 @@
     class="flex items-center gap-1 text-small tracking-wider hover:text-bronze transition-colors"
     @click="toggleLocale"
   >
-    <span class="text-subtle-light dark:text-subtle-dark">{{ locale === 'en' ? 'EN' : '中' }}</span>
+    <span class="text-subtle-light dark:text-subtle-dark">{{ locale === 'en' ? '中' : 'EN' }}</span>
   </button>
 </template>
 
