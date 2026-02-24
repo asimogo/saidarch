@@ -86,7 +86,7 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 本仓库额外提供了 GitHub Actions 兜底部署流程：
 - 配置文件：`.github/workflows/vercel-deploy.yml`
-- 作用：当 push 到 `master/main` 或发起 PR 时，直接通过 Vercel CLI 触发部署。
+- 作用：**仅当 push 到 `master/main` 时**，通过 Vercel CLI 触发 **Production** 部署（不会在 PR 事件触发 Preview）。
 
 使用前请在 GitHub 仓库 `Settings → Secrets and variables → Actions` 新增：
 - `VERCEL_TOKEN`
