@@ -32,7 +32,7 @@
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     format="webp"
                     :quality="80"
-                    sizes="100vw"
+                    sizes="xs:100vw sm:100vw md:100vw lg:100vw xl:100vw xxl:100vw"
                     loading="lazy"
                   />
                   <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />

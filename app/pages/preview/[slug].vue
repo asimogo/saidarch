@@ -21,7 +21,7 @@
         class="w-full h-full object-cover"
         format="webp"
         :quality="85"
-        sizes="100vw"
+        sizes="xs:100vw sm:100vw md:100vw lg:100vw xl:100vw xxl:100vw"
       />
       <div class="absolute inset-0 bg-black/40 flex items-end p-8 lg:p-16">
         <div>

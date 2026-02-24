@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<{
   preload: false,
   format: 'webp',
   quality: 80,
-  sizes: '100vw',
+  sizes: 'xs:100vw sm:100vw md:100vw lg:100vw xl:100vw xxl:100vw',
 })
 
 const loaded = ref(false)
