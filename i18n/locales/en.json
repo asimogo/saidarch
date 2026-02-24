@@ -5,6 +5,10 @@
     "about": "About",
     "contact": "Contact"
   },
+  "about": {
+    "readMore": "Read More",
+    "showLess": "Show Less"
+  },
   "hero": {
     "viewProjects": "View Projects",
     "contactUs": "Contact Us"

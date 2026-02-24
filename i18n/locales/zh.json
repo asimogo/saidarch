@@ -5,6 +5,10 @@
     "about": "关于",
     "contact": "联系"
   },
+  "about": {
+    "readMore": "\u4e86\u89e3\u66f4\u591a",
+    "showLess": "\u6536\u8d77"
+  },
   "hero": {
     "viewProjects": "查看作品",
     "contactUs": "联系我们"

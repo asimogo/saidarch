@@ -1,5 +1,5 @@
 <template>
-  <section v-if="projects?.length" id="projects" class="pt-32 md:pt-40 pb-section">
+  <section v-if="projects?.length" id="projects" class="pt-24 md:pt-32 pb-section">
     <div class="max-w-7xl mx-auto px-6">
       <!-- Section header -->
       <div class="text-center mb-12">
