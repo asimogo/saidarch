@@ -58,6 +58,7 @@ export type Database = {
           cta_text_zh: string | null
           cta_text_en: string | null
           cta_link: string | null
+          project_id: string | null
           sort_order: number
           is_active: boolean
           created_at: string
@@ -73,6 +74,7 @@ export type Database = {
           cta_text_zh?: string | null
           cta_text_en?: string | null
           cta_link?: string | null
+          project_id?: string | null
           sort_order?: number
           is_active?: boolean
           created_at?: string
@@ -88,6 +90,7 @@ export type Database = {
           cta_text_zh?: string | null
           cta_text_en?: string | null
           cta_link?: string | null
+          project_id?: string | null
           sort_order?: number
           is_active?: boolean
           created_at?: string

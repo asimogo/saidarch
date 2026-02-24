@@ -28,7 +28,7 @@ const { data: heroSlides } = await useAsyncData('hero-slides', async () => {
   try {
     const { data } = await supabase
       .from('hero_slides')
-      .select('*')
+      .select('*, project:projects(*, category:categories(*))')
       .eq('is_active', true)
       .order('sort_order')
     return data

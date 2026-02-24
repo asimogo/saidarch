@@ -30,19 +30,25 @@
                   class="w-full text-sm text-gray-500 bg-transparent border-b border-transparent hover:border-gray-300 focus:border-bronze focus:outline-none pb-1"
                 />
               </div>
-              <div class="grid grid-cols-2 gap-2">
+              <!-- Project selector -->
+              <div class="grid grid-cols-3 gap-2">
+                <select
+                  :value="slide.project_id || ''"
+                  class="w-full text-xs text-gray-500 bg-transparent border-b border-transparent hover:border-gray-300 focus:border-bronze focus:outline-none pb-1 col-span-2"
+                  @change="onProjectSelect(slide, ($event.target as HTMLSelectElement).value)"
+                >
+                  <option value="">-- 关联项目 (Link Project) --</option>
+                  <option v-for="p in projects" :key="p.id" :value="p.id">
+                    {{ p.title_zh || p.title_en }} — {{ p.location || '' }}
+                  </option>
+                </select>
                 <input
-                  v-model="slide.subtitle_zh"
-                  placeholder="副标题（中文）"
-                  class="w-full text-xs text-gray-500 bg-transparent border-b border-transparent hover:border-gray-300 focus:border-bronze focus:outline-none pb-1"
-                />
-                <input
-                  v-model="slide.subtitle_en"
-                  placeholder="Subtitle (English)"
-                  class="w-full text-xs text-gray-500 bg-transparent border-b border-transparent hover:border-gray-300 focus:border-bronze focus:outline-none pb-1"
+                  v-model="slide.cta_link"
+                  placeholder="CTA Link (e.g. /projects/xxx)"
+                  class="w-full text-xs text-gray-400 bg-transparent border-b border-transparent hover:border-gray-300 focus:border-bronze focus:outline-none pb-1"
                 />
               </div>
-              <div class="grid grid-cols-3 gap-2">
+              <div class="grid grid-cols-2 gap-2">
                 <input
                   v-model="slide.cta_text_zh"
                   placeholder="CTA 文案（中文）"
@@ -52,11 +58,6 @@
                   v-model="slide.cta_text_en"
                   placeholder="CTA Text (English)"
                   class="w-full text-xs text-gray-500 bg-transparent border-b border-transparent hover:border-gray-300 focus:border-bronze focus:outline-none pb-1"
-                />
-                <input
-                  v-model="slide.cta_link"
-                  placeholder="CTA Link (e.g. #projects)"
-                  class="w-full text-xs text-gray-400 bg-transparent border-b border-transparent hover:border-gray-300 focus:border-bronze focus:outline-none pb-1"
                 />
               </div>
             </div>
@@ -90,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import type { HeroSlide } from '~/shared/types'
+import type { HeroSlide, Project } from '~/shared/types'
 
 definePageMeta({ layout: 'admin', middleware: 'auth' })
 
@@ -101,8 +102,25 @@ const { data: slidesData, refresh } = await useAsyncData('admin-hero', () =>
   supabase.from('hero_slides').select('*').order('sort_order').then(({ data }) => data),
 )
 
+const { data: projectsData } = await useAsyncData('admin-projects-list', () =>
+  supabase.from('projects').select('id, title_zh, title_en, slug, location').eq('publish_status', 'published').order('sort_order').then(({ data }) => data),
+)
+
 const slides = ref<HeroSlide[]>([])
+const projects = computed(() => projectsData.value || [])
 watch(slidesData, (val) => { if (val) slides.value = [...val] }, { immediate: true })
+
+const onProjectSelect = (slide: HeroSlide, projectId: string) => {
+  if (!projectId) {
+    slide.project_id = null
+    return
+  }
+  slide.project_id = projectId
+  const project = projects.value.find((p: Pick<Project, 'id' | 'slug'>) => p.id === projectId)
+  if (project) {
+    slide.cta_link = `/projects/${project.slug}`
+  }
+}
 
 const addSlide = () => {
   slides.value.push({
@@ -114,7 +132,8 @@ const addSlide = () => {
     subtitle_en: '',
     cta_text_zh: '查看作品',
     cta_text_en: 'View Projects',
-    cta_link: '#projects',
+    cta_link: '/projects',
+    project_id: null,
     sort_order: slides.value.length,
     is_active: true,
     created_at: new Date().toISOString(),
@@ -142,6 +161,7 @@ const saveAll = async () => {
         cta_text_zh: slide.cta_text_zh,
         cta_text_en: slide.cta_text_en,
         cta_link: slide.cta_link,
+        project_id: slide.project_id,
         sort_order: i,
         is_active: slide.is_active,
       }

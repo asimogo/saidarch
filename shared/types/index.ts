@@ -20,6 +20,11 @@ export type ProjectWithRelations = Project & {
   project_images: ProjectImage[]
 }
 
+// Hero slide with linked project
+export type HeroSlideWithProject = HeroSlide & {
+  project: (Project & { category: Category | null }) | null
+}
+
 // Site settings map (key -> setting)
 export type SiteSettingsMap = Record<string, SiteSetting>
 
