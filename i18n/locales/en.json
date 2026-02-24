@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "viewProjects": "View Projects",
+    "contactUs": "Contact Us"
+  },
+  "projects": {
+    "title": "Our Projects",
+    "all": "All",
+    "viewAll": "View All Projects",
+    "seoTitle": "Projects",
+    "seoDescription": "Explore the architecture and interior design projects by SAID."
+  },
+  "project": {
+    "location": "Location",
+    "area": "Area",
+    "year": "Year",
+    "category": "Category",
+    "status": "Status",
+    "description": "Design Concept",
+    "gallery": "Gallery",
+    "related": "Related Projects",
+    "prev": "Previous Project",
+    "next": "Next Project",
+    "backToHome": "Back to Home",
+    "viewAll": "View All Projects"
+  },
+  "status": {
+    "designing": "In Design",
+    "constructing": "Under Construction",
+    "completed": "Completed",
+    "awarded": "Award Winning"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "mapTitle": "Our Office Location"
+  },
+  "footer": {
+    "copyright": "© SAID {year}. All rights reserved.",
+    "privacy": "Privacy Policy"
+  },
+  "error": {
+    "notFound": "Page Not Found",
+    "notFoundDesc": "The page you're looking for doesn't exist.",
+    "backHome": "Back to Home"
+  }
+}

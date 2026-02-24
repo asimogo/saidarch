@@ -1,0 +1,8 @@
+[
+  {
+    "AllowedOrigins": ["http://localhost:3000", "https://saidarch.com"],
+    "AllowedMethods": ["GET", "PUT", "HEAD"],
+    "AllowedHeaders": ["Content-Type"],
+    "MaxAgeSeconds": 3600
+  }
+]

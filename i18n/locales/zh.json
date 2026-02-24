@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "projects": "项目",
+    "about": "关于",
+    "contact": "联系"
+  },
+  "hero": {
+    "viewProjects": "查看作品",
+    "contactUs": "联系我们"
+  },
+  "projects": {
+    "title": "我们的项目",
+    "all": "全部",
+    "viewAll": "查看所有项目",
+    "seoTitle": "项目作品",
+    "seoDescription": "探索上境设计（SAID）的建筑与室内设计作品集。"
+  },
+  "project": {
+    "location": "地点",
+    "area": "建筑面积",
+    "year": "设计年份",
+    "category": "项目类型",
+    "status": "项目状态",
+    "description": "设计理念",
+    "gallery": "项目图集",
+    "related": "相关项目",
+    "prev": "上一个项目",
+    "next": "下一个项目",
+    "backToHome": "返回首页",
+    "viewAll": "查看所有项目"
+  },
+  "status": {
+    "designing": "设计中",
+    "constructing": "施工中",
+    "completed": "已竣工",
+    "awarded": "已获奖"
+  },
+  "contact": {
+    "title": "联系我们",
+    "mapTitle": "办公室位置"
+  },
+  "footer": {
+    "copyright": "© SAID {year}. 保留所有权利。",
+    "privacy": "隐私政策"
+  },
+  "error": {
+    "notFound": "页面未找到",
+    "notFoundDesc": "您访问的页面不存在。",
+    "backHome": "返回首页"
+  }
+}
