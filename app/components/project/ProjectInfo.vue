@@ -1,6 +1,6 @@
 <template>
   <section class="max-w-4xl mx-auto px-6 py-12">
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
       <div v-if="project.category">
         <p class="text-xs uppercase tracking-wider text-bronze mb-1">{{ $t('project.category') }}</p>
         <p class="text-body">{{ l(project.category, 'name') }}</p>
