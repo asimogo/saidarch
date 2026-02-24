@@ -10,6 +10,7 @@
       <!-- Projects carousel -->
       <div v-if="projects?.length" class="relative">
         <BaseCarousel
+          ref="carouselRef"
           :total="projects.length"
           :autoplay="false"
           :show-dots="true"
@@ -49,6 +50,28 @@
             </div>
           </template>
         </BaseCarousel>
+
+        <!-- Navigation arrows (PC only) -->
+        <template v-if="projects.length > 1">
+          <button
+            class="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center bg-black/30 hover:bg-black/50 text-white transition-colors"
+            aria-label="Previous project"
+            @click="carouselRef?.prev()"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            class="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 items-center justify-center bg-black/30 hover:bg-black/50 text-white transition-colors"
+            aria-label="Next project"
+            @click="carouselRef?.next()"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </template>
       </div>
 
       <!-- View All button -->
@@ -70,6 +93,7 @@ defineProps<{
 
 const { l } = useLocalizedField()
 const localePath = useLocalePath()
+const carouselRef = ref<{ next: () => void; prev: () => void } | null>(null)
 
 const onProjectChange = (_index: number) => {
   // Could track analytics here

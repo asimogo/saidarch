@@ -10,28 +10,6 @@
       <slot :current-index="currentIndex" />
     </div>
 
-    <!-- Navigation arrows -->
-    <button
-      v-if="showArrows && total > 1"
-      class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-black/30 hover:bg-black/50 text-white transition-colors"
-      aria-label="Previous slide"
-      @click="prev"
-    >
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-      </svg>
-    </button>
-    <button
-      v-if="showArrows && total > 1"
-      class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-black/30 hover:bg-black/50 text-white transition-colors"
-      aria-label="Next slide"
-      @click="next"
-    >
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-      </svg>
-    </button>
-
     <!-- Dots indicator -->
     <div v-if="showDots && total > 1" class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex gap-2">
       <button
@@ -52,12 +30,10 @@ const props = withDefaults(defineProps<{
   total: number
   autoplay?: boolean
   interval?: number
-  showArrows?: boolean
   showDots?: boolean
 }>(), {
   autoplay: true,
   interval: 5000,
-  showArrows: true,
   showDots: true,
 })
 

@@ -4,7 +4,6 @@
       :total="slides?.length || 0"
       :autoplay="true"
       :interval="6000"
-      :show-arrows="(slides?.length || 0) > 1"
       class="h-full"
       @change="onSlideChange"
     >
