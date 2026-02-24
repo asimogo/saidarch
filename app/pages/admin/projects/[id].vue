@@ -11,7 +11,7 @@
             :disabled="saving"
             @click="saveDraft"
           >
-            {{ saving ? 'Saving...' : 'Save Draft' }}
+            {{ saving ? 'Saving...' : 'Save' }}
           </button>
           <button
             class="px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 hover:border-bronze transition-colors rounded disabled:opacity-50"
@@ -97,10 +97,7 @@
 
         <!-- Project Images -->
         <section class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="font-semibold">Gallery Images</h2>
-            <button type="button" class="text-sm text-bronze hover:text-bronze-hover" @click="addGalleryImage">+ Add Single</button>
-          </div>
+          <h2 class="font-semibold mb-4">Gallery Images</h2>
 
           <!-- Batch upload -->
           <AdminBatchImageUploader
@@ -108,13 +105,43 @@
             @uploaded="onBatchImageUploaded"
           />
 
-          <!-- Existing images grid -->
+          <!-- Existing images grid (draggable) -->
           <div v-if="galleryImages.length" class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-            <div v-for="(img, idx) in galleryImages" :key="idx" class="space-y-2">
-              <AdminImageUploader v-model="img.image_url" :folder="`projects/${form.slug || 'new'}`" />
+            <div
+              v-for="(img, idx) in galleryImages"
+              :key="idx"
+              class="space-y-2 rounded-lg border p-2 transition-all duration-200"
+              :class="galleryDragIndex === idx
+                ? 'border-bronze bg-bronze/5 opacity-50'
+                : galleryDragOverIndex === idx
+                  ? 'border-bronze border-dashed bg-bronze/5'
+                  : 'border-transparent'"
+              draggable="true"
+              @dragstart="handleGalleryDragStart(idx)"
+              @dragover.prevent="handleGalleryDragOver(idx)"
+              @dragleave="handleGalleryDragLeave"
+              @drop.prevent="handleGalleryDrop(idx)"
+              @dragend="handleGalleryDragEnd"
+            >
+              <div class="relative">
+                <AdminImageUploader v-model="img.image_url" :folder="`projects/${form.slug || 'new'}`" />
+                <button
+                  type="button"
+                  class="absolute top-1 right-1 w-5 h-5 flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-red-500 transition-colors text-xs leading-none"
+                  @click="galleryImages.splice(idx, 1)"
+                >
+                  &times;
+                </button>
+                <div class="absolute top-1 left-1 cursor-grab active:cursor-grabbing text-white/70 hover:text-white bg-black/30 rounded-full w-5 h-5 flex items-center justify-center">
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                    <circle cx="9" cy="5" r="1.5" /><circle cx="15" cy="5" r="1.5" />
+                    <circle cx="9" cy="12" r="1.5" /><circle cx="15" cy="12" r="1.5" />
+                    <circle cx="9" cy="19" r="1.5" /><circle cx="15" cy="19" r="1.5" />
+                  </svg>
+                </div>
+              </div>
               <input v-model="img.caption_zh" placeholder="说明（中文）" class="w-full px-2 py-1 text-xs border border-gray-200 dark:border-gray-600 rounded bg-transparent" />
               <input v-model="img.caption_en" placeholder="Caption (EN)" class="w-full px-2 py-1 text-xs border border-gray-200 dark:border-gray-600 rounded bg-transparent" />
-              <button type="button" class="text-xs text-red-500 hover:text-red-600" @click="galleryImages.splice(idx, 1)">Remove</button>
             </div>
           </div>
           <p v-else class="text-sm text-gray-400 mt-4">No gallery images yet.</p>
@@ -250,8 +277,34 @@ watch(() => form.title_zh, (val) => {
   }
 })
 
-const addGalleryImage = () => {
-  galleryImages.value.push({ image_url: '', caption_zh: '', caption_en: '', sort_order: galleryImages.value.length })
+// Gallery drag-and-drop reorder
+const galleryDragIndex = ref<number | null>(null)
+const galleryDragOverIndex = ref<number | null>(null)
+
+function handleGalleryDragStart(index: number) {
+  galleryDragIndex.value = index
+}
+function handleGalleryDragOver(index: number) {
+  if (galleryDragIndex.value === null || galleryDragIndex.value === index) return
+  galleryDragOverIndex.value = index
+}
+function handleGalleryDragLeave() {
+  galleryDragOverIndex.value = null
+}
+function handleGalleryDrop(targetIndex: number) {
+  if (galleryDragIndex.value === null || galleryDragIndex.value === targetIndex) return
+  const items = [...galleryImages.value]
+  const [moved] = items.splice(galleryDragIndex.value, 1)
+  items.splice(targetIndex, 0, moved)
+  galleryImages.value = items.map((img, i) => ({ ...img, sort_order: i }))
+  galleryDragIndex.value = null
+  galleryDragOverIndex.value = null
+  // Auto-save order for existing projects
+  if (!isNew) saveGalleryImages(id)
+}
+function handleGalleryDragEnd() {
+  galleryDragIndex.value = null
+  galleryDragOverIndex.value = null
 }
 
 const onBatchImageUploaded = (url: string) => {

@@ -1,13 +1,5 @@
 <template>
   <div class="flex items-center gap-3">
-    <!-- Status Badge -->
-    <span
-      class="inline-flex items-center px-2.5 py-1 text-xs font-medium rounded-full"
-      :class="statusStyles[currentStatus]"
-    >
-      {{ statusLabels[currentStatus] }}
-    </span>
-
     <!-- Status Selector -->
     <div class="relative">
       <select
@@ -67,22 +59,9 @@ watch(
   },
 )
 
-const statusLabels: Record<PublishStatus, string> = {
-  draft: '草稿',
-  published: '已发布',
-  archived: '已归档',
-}
-
-const statusStyles: Record<PublishStatus, string> = {
-  draft: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
-  published: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
-  archived: 'bg-gray-100 text-gray-600 dark:bg-gray-800/50 dark:text-gray-400',
-}
-
 const statusOptions = [
   { value: 'draft' as PublishStatus, label: '草稿' },
   { value: 'published' as PublishStatus, label: '已发布' },
-  { value: 'archived' as PublishStatus, label: '已归档' },
 ]
 
 async function handleStatusChange() {

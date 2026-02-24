@@ -12,7 +12,7 @@ export const NAV_ITEMS = [
 export const PROJECT_STATUSES = ['designing', 'constructing', 'completed', 'awarded'] as const
 
 // Publish status options
-export const PUBLISH_STATUSES = ['draft', 'published', 'archived'] as const
+export const PUBLISH_STATUSES = ['draft', 'published'] as const
 
 // Settings group names
 export const SETTINGS_GROUPS = ['brand', 'theme', 'contact', 'social', 'seo', 'about'] as const
