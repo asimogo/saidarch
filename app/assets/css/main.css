@@ -98,6 +98,12 @@
   transform: translateY(-12px);
 }
 
+/* === Hero Slide Image (mobile object-fit safeguard) === */
+.hero-slide-img {
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
 /* === Reduced Motion === */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

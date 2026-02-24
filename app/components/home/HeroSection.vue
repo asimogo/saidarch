@@ -24,8 +24,6 @@
             format="webp"
             :quality="85"
             sizes="100vw"
-            width="1920"
-            height="1080"
           />
           <!-- Dark overlay -->
           <div class="absolute inset-0 bg-black/40" />
