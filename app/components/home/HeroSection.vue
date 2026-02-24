@@ -25,7 +25,7 @@
             :loading="i === 0 ? 'eager' : 'lazy'"
             format="webp"
             :quality="85"
-            sizes="100vw"
+            sizes="xs:100vw sm:100vw md:100vw lg:100vw xl:100vw xxl:100vw"
           />
           <!-- Dark overlay -->
           <div class="absolute inset-0 bg-black/40" />
