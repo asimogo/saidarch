@@ -108,7 +108,6 @@ const metadataLine = computed(() => {
   return [
     p.category ? l(p.category, 'name') : null,
     p.location,
-    p.area,
     p.year,
   ].filter(Boolean).join(' · ')
 })
