@@ -4,6 +4,7 @@
       :total="slides?.length || 0"
       :autoplay="true"
       :interval="6000"
+      :initial-index="startIndex"
       class="h-full"
       @change="onSlideChange"
     >
@@ -20,8 +21,8 @@
             class="hero-slide-img absolute inset-0 w-full h-full object-cover object-center"
             fit="cover"
             position="center"
-            :preload="i === 0"
-            :loading="i === 0 ? 'eager' : 'lazy'"
+            :preload="i === startIndex"
+            :loading="i === startIndex ? 'eager' : 'lazy'"
             format="webp"
             :quality="85"
             sizes="xs:100vw sm:100vw md:100vw lg:100vw xl:100vw xxl:100vw"
@@ -99,7 +100,10 @@ const localePath = useLocalePath()
 const { kenBurns } = useAnimation()
 
 const heroRef = ref<HTMLElement | null>(null)
-const currentIndex = ref(0)
+// Start on a random slide each visit. The hero only renders client-side (the home
+// page shows LoadingScreen until mounted), so this can't cause a hydration mismatch.
+const startIndex = Math.floor(Math.random() * (props.slides?.length || 1))
+const currentIndex = ref(startIndex)
 const currentSlide = computed(() => props.slides?.[currentIndex.value] || null)
 const linkedProject = computed(() => currentSlide.value?.project || null)
 const metadataLine = computed(() => {
@@ -126,6 +130,6 @@ const onSlideChange = (index: number) => {
 }
 
 onMounted(() => {
-  nextTick(() => applyKenBurns(0))
+  nextTick(() => applyKenBurns(startIndex))
 })
 </script>

@@ -31,17 +31,19 @@ const props = withDefaults(defineProps<{
   autoplay?: boolean
   interval?: number
   showDots?: boolean
+  initialIndex?: number
 }>(), {
   autoplay: true,
   interval: 5000,
   showDots: true,
+  initialIndex: 0,
 })
 
 const emit = defineEmits<{
   change: [index: number]
 }>()
 
-const currentIndex = ref(0)
+const currentIndex = ref(props.initialIndex)
 let timer: ReturnType<typeof setInterval> | null = null
 let touchStartX = 0
 let touchDeltaX = 0
