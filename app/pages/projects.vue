@@ -41,6 +41,7 @@
 
 <script setup lang="ts">
 import type { ProjectWithRelations } from '~/shared/types'
+import { freshOnNavigation } from '~/utils/helpers'
 
 const supabase = useSupabase()
 
@@ -52,7 +53,7 @@ const { data: categories } = await useAsyncData('categories', async () => {
     const { data } = await supabase.from('categories').select('*').order('sort_order')
     return data
   } catch { return null }
-})
+}, { getCachedData: freshOnNavigation })
 
 // Fetch all published projects
 const { data: projects } = await useAsyncData('all-projects', async () => {
@@ -64,7 +65,7 @@ const { data: projects } = await useAsyncData('all-projects', async () => {
       .order('sort_order')
     return data as ProjectWithRelations[] | null
   } catch { return null }
-})
+}, { getCachedData: freshOnNavigation })
 
 // Filtered projects
 const filteredProjects = computed(() => {

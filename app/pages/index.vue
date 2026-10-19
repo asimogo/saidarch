@@ -12,6 +12,8 @@
 </template>
 
 <script setup lang="ts">
+import { freshOnNavigation } from '~/utils/helpers'
+
 const supabase = useSupabase()
 const isLoading = ref(true)
 
@@ -33,7 +35,7 @@ const { data: heroSlides } = await useAsyncData('hero-slides', async () => {
       .order('sort_order')
     return data
   } catch { return null }
-})
+}, { getCachedData: freshOnNavigation })
 
 // Featured projects
 const { data: featuredProjects } = await useAsyncData('featured-projects', async () => {
@@ -46,7 +48,7 @@ const { data: featuredProjects } = await useAsyncData('featured-projects', async
       .order('sort_order')
     return data
   } catch { return null }
-})
+}, { getCachedData: freshOnNavigation })
 
 // SEO
 const seoTitle = siteSettings?.get('seo_title') || 'SAID | Summit Architecture & Interior Design'

@@ -49,6 +49,7 @@
 
 <script setup lang="ts">
 import type { ProjectWithRelations } from '~/shared/types'
+import { freshOnNavigation } from '~/utils/helpers'
 
 const route = useRoute()
 const slug = route.params.slug as string
@@ -63,6 +64,7 @@ const { data: redirect } = await useAsyncData(`redirect-${slug}`, () =>
     .eq('old_slug', slug)
     .single()
     .then(({ data }) => data),
+  { getCachedData: freshOnNavigation },
 )
 if (redirect.value) {
   navigateTo(`/project/${redirect.value.new_slug}`, { redirectCode: 301 })
@@ -77,6 +79,7 @@ const { data: project } = await useAsyncData(`project-${slug}`, () =>
     .eq('publish_status', 'published')
     .single()
     .then(({ data }) => data as ProjectWithRelations | null),
+  { getCachedData: freshOnNavigation },
 )
 
 if (!project.value) {
@@ -91,6 +94,7 @@ const { data: allProjects } = await useAsyncData('nav-projects', () =>
     .eq('publish_status', 'published')
     .order('sort_order')
     .then(({ data }) => data as ProjectWithRelations[] | null),
+  { getCachedData: freshOnNavigation },
 )
 
 // SEO

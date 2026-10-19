@@ -202,6 +202,7 @@ definePageMeta({ layout: 'admin', middleware: 'auth' })
 
 const route = useRoute()
 const supabase = useSupabase()
+const revalidate = useRevalidate()
 const id = route.params.id as string
 const isNew = id === 'new'
 const saving = ref(false)
@@ -355,9 +356,14 @@ const saveProject = async (): Promise<{ id: string; slug: string } | null> => {
     }
     return null
   } else {
+    const previousSlug = originalSlug.value
     await saveSlugRedirect()
     await supabase.from('projects').update(payload).eq('id', id)
     await saveGalleryImages(id)
+    if (form.publish_status === 'published') {
+      const slugs = [...new Set([form.slug, previousSlug].filter(Boolean))]
+      await revalidate(['/', '/projects', ...slugs.map(s => `/project/${s}`)])
+    }
     return { id, slug: form.slug }
   }
 }

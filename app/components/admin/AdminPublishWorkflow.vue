@@ -46,6 +46,7 @@ const emit = defineEmits<{
 }>()
 
 const supabase = useSupabase()
+const revalidate = useRevalidate()
 const updating = ref(false)
 
 const currentStatus = ref<PublishStatus>(props.status)
@@ -88,22 +89,8 @@ async function handleStatusChange() {
     if (error) throw error
 
     // Trigger route revalidation (best-effort)
-    const { data: { session } } = await supabase.auth.getSession()
-    if (session?.access_token && props.projectSlug) {
-      const paths = [
-        '/projects',
-        '/zh/projects',
-        `/project/${props.projectSlug}`,
-        `/zh/project/${props.projectSlug}`,
-      ]
-
-      await $fetch('/api/revalidate', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: { paths },
-      }).catch(() => {})
+    if (props.projectSlug) {
+      await revalidate(['/', '/projects', `/project/${props.projectSlug}`])
     }
 
     currentStatus.value = newStatus

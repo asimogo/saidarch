@@ -96,6 +96,7 @@ import type { HeroSlide, Project } from '~/shared/types'
 definePageMeta({ layout: 'admin', middleware: 'auth' })
 
 const supabase = useSupabase()
+const revalidate = useRevalidate()
 const saving = ref(false)
 
 const { data: slidesData, refresh } = await useAsyncData('admin-hero', () =>
@@ -145,6 +146,7 @@ const removeSlide = async (id: string) => {
   if (!confirm('Delete this slide?')) return
   await supabase.from('hero_slides').delete().eq('id', id)
   slides.value = slides.value.filter(s => s.id !== id)
+  await revalidate(['/'])
 }
 
 const saveAll = async () => {
@@ -168,6 +170,7 @@ const saveAll = async () => {
       await supabase.from('hero_slides').upsert({ id: slide.id, ...data })
     }
     await refresh()
+    await revalidate(['/'])
   } finally {
     saving.value = false
   }

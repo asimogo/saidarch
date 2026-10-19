@@ -1,3 +1,14 @@
+import type { NuxtApp } from '#app'
+
+/**
+ * `getCachedData` for public content that changes without a redeploy.
+ * On client-side navigation Nuxt reads ISR pages' data from `_payload.json?<buildId>`,
+ * fetched with `cache: 'force-cache'`, so browsers keep the first copy they saw until
+ * the next deploy. Only reuse payload data while hydrating; query fresh data otherwise.
+ */
+export const freshOnNavigation = (key: string, nuxtApp: NuxtApp) =>
+  nuxtApp.isHydrating ? nuxtApp.payload.data[key] : undefined
+
 /**
  * Generate a URL-friendly slug from text
  */

@@ -43,9 +43,11 @@ export default defineNuxtConfig({
   },
 
   // Hybrid rendering route rules
+  // ISR pages are refreshed on demand by /api/revalidate after admin edits.
+  // `/` is rendered per request: i18n redirects it by Accept-Language/cookie, and
+  // Vercel's ISR cache would replay one visitor's redirect and Set-Cookie to everyone.
   routeRules: {
-    '/': { prerender: true },
-    '/zh': { prerender: true },
+    '/zh': { isr: 60 },
     '/projects': { isr: 60 },
     '/zh/projects': { isr: 60 },
     '/project/**': { isr: 60 },
@@ -54,6 +56,16 @@ export default defineNuxtConfig({
     '/privacy': { prerender: true },
     '/zh/privacy': { prerender: true },
     '/admin/**': { ssr: false },
+  },
+
+  nitro: {
+    vercel: {
+      config: {
+        // Requests carrying this token in `x-prerender-revalidate` refresh Vercel's ISR cache.
+        // Read at build time, so NUXT_REVALIDATE_SECRET must be set for Vercel builds too.
+        bypassToken: process.env.NUXT_REVALIDATE_SECRET,
+      },
+    },
   },
 
   // i18n
