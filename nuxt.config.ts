@@ -85,9 +85,15 @@ export default defineNuxtConfig({
   },
 
   // Nuxt Image
+  // Images live on R2 behind Cloudflare; Cloudflare Image Transformations (enabled for
+  // the saidarch.com zone) serve resized AVIF/WebP. Free plan: 5,000 unique
+  // transformations/month, never billed; past that, onerror=redirect serves the original.
   image: {
-    provider: 'ipx',
-    format: ['webp', 'avif'],
+    provider: 'cloudflare',
+    cloudflare: {
+      baseURL: 'https://assets.saidarch.com',
+      modifiers: { format: 'auto', onerror: 'redirect' },
+    },
     quality: 80,
     screens: {
       xs: 320,

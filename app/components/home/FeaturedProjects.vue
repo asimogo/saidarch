@@ -31,7 +31,6 @@
                     :src="project.cover_url"
                     :alt="l(project, 'title')"
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    format="webp"
                     :quality="80"
                     sizes="xs:100vw sm:100vw md:100vw lg:100vw xl:100vw xxl:100vw"
                     loading="lazy"

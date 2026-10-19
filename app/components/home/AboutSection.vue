@@ -10,7 +10,6 @@
               :src="avatarUrl"
               alt="SAID Principal Designer"
               class="w-full h-full object-cover"
-              format="webp"
               :quality="80"
               loading="lazy"
             />

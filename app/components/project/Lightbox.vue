@@ -49,7 +49,6 @@
           :src="images[currentIndex].image_url"
           :alt="l(images[currentIndex], 'caption') || ''"
           class="max-w-full max-h-[85vh] object-contain"
-          format="webp"
           :quality="90"
         />
       </div>

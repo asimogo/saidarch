@@ -15,7 +15,6 @@
             :src="image.image_url"
             :alt="l(image, 'caption') || `Image ${i + 1}`"
             class="w-full aspect-[16/10] object-cover transition-transform duration-700 group-hover:scale-105"
-            format="webp"
             :quality="80"
             sizes="sm:100vw md:50vw"
             loading="lazy"

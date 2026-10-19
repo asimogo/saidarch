@@ -19,7 +19,6 @@
         :src="project.cover_url"
         :alt="l(project, 'title')"
         class="w-full h-full object-cover"
-        format="webp"
         :quality="85"
         sizes="xs:100vw sm:100vw md:100vw lg:100vw xl:100vw xxl:100vw"
       />

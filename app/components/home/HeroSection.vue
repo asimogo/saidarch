@@ -20,11 +20,8 @@
             :src="slide.image_url"
             :alt="l(slide, 'title') || 'SAID Architecture'"
             class="hero-slide-img absolute inset-0 w-full h-full object-cover object-center"
-            fit="cover"
-            position="center"
             :preload="i === startIndex"
             :loading="i === startIndex ? 'eager' : 'lazy'"
-            format="webp"
             :quality="85"
             sizes="xs:100vw sm:100vw md:100vw lg:100vw xl:100vw xxl:100vw"
           />
