@@ -1,6 +1,7 @@
 <template>
   <section id="hero" ref="heroRef" class="relative h-[100svh] md:h-screen -mt-16 overflow-hidden">
     <BaseCarousel
+      ref="carouselRef"
       :total="slides?.length || 0"
       :autoplay="true"
       :interval="6000"
@@ -33,8 +34,31 @@
       </template>
     </BaseCarousel>
 
-    <!-- Content overlay — bottom-left aligned, max-w-7xl to match other sections -->
-    <div class="absolute inset-0 z-10 flex items-end pb-20 md:pb-24">
+    <!-- Navigation arrows -->
+    <template v-if="slides && slides.length > 1">
+      <button
+        class="flex absolute left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 items-center justify-center bg-black/30 hover:bg-black/50 text-white transition-colors"
+        aria-label="Previous slide"
+        @click="carouselRef?.prev()"
+      >
+        <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button
+        class="flex absolute right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 md:w-10 md:h-10 items-center justify-center bg-black/30 hover:bg-black/50 text-white transition-colors"
+        aria-label="Next slide"
+        @click="carouselRef?.next()"
+      >
+        <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    </template>
+
+    <!-- Content overlay — bottom-left aligned, max-w-7xl to match other sections.
+         pointer-events-none so clicks and swipes reach the carousel underneath. -->
+    <div class="absolute inset-0 z-10 flex items-end pb-20 md:pb-24 pointer-events-none">
       <div class="max-w-7xl mx-auto w-full px-6 text-left text-white">
         <h1 v-if="currentSlide" class="font-heading text-2xl md:text-3xl lg:text-4xl tracking-wider mb-3">
           {{ l(currentSlide, 'title') }}
@@ -69,7 +93,7 @@
 
         <NuxtLink
           :to="currentSlide?.cta_link || localePath('/projects')"
-          class="inline-flex items-center gap-2 text-sm tracking-wide text-white/80 hover:text-bronze transition-colors"
+          class="inline-flex items-center gap-2 text-sm tracking-wide text-white/80 hover:text-bronze transition-colors pointer-events-auto"
         >
           {{ l(currentSlide, 'cta_text') || $t('hero.viewProjects') }}
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,7 +104,7 @@
     </div>
 
     <!-- Scroll down indicator -->
-    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce pointer-events-none">
       <svg class="w-6 h-6 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
       </svg>
@@ -100,6 +124,7 @@ const localePath = useLocalePath()
 const { kenBurns } = useAnimation()
 
 const heroRef = ref<HTMLElement | null>(null)
+const carouselRef = ref<{ next: () => void; prev: () => void } | null>(null)
 // Start on a random slide each visit. The hero only renders client-side (the home
 // page shows LoadingScreen until mounted), so this can't cause a hydration mismatch.
 const startIndex = Math.floor(Math.random() * (props.slides?.length || 1))
